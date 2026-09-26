@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de Crédito — Habitação e Pessoal (PT)</title>
+    <meta
+      name="description"
+      content="Simulador de crédito habitação e crédito pessoal alinhado com o regime fiscal português e as regras de concessão do Banco de Portugal."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <header class="topbar">
+      <div class="brand">
+        <span class="mark">PT</span>
+        <div>
+          <strong>Simulador de Crédito</strong>
+          <small>Regime fiscal PT · Regras Banco de Portugal</small>
+        </div>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab is-active" data-tab="housing" type="button">Crédito Habitação</button>
+        <button class="tab" data-tab="personal" type="button">Crédito Pessoal</button>
+        <button class="tab" data-tab="rules" type="button">Normas</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="panel-housing" class="panel is-active">
+        <div class="layout">
+          <form id="form-housing" class="card form">
+            <h1>Crédito à habitação</h1>
+            <p class="lede">
+              Simulação com IMT, Imposto do Selo, LTV, DSTI 45% (Rec. 1/2026) e teste de esforço de taxa em vigor desde outubro de 2023.
+            </p>
+
+            <fieldset>
+              <legend>Imóvel</legend>
+              <div class="grid2">
+                <label>
+                  Valor de aquisição (€)
+                  <input name="propertyValue" type="number" min="0" step="1000" value="250000" required />
+                </label>
+                <label>
+                  Avaliação / garantia (€)
+                  <input name="appraisalValue" type="number" min="0" step="1000" value="250000" />
+                </label>
+                <label>
+                  Finalidade
+                  <select name="purpose">
+                    <option value="hpp" selected>Habitação própria e permanente</option>
+                    <option value="second">Habitação secundária / investimento</option>
+                    <option value="works">Obras em imóvel próprio</option>
+                    <option value="other">Outras finalidades</option>
+                  </select>
+                </label>
+                <label>
+                  Região
+                  <select name="region">
+                    <option value="continente" selected>Continente</option>
+                    <option value="madeira">Madeira</option>
+                    <option value="acores">Açores</option>
+                  </select>
+                </label>
+              </div>
+              <div class="checks">
+                <label class="check">
+                  <input name="rural" type="checkbox" />
+                  Prédio rústico
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Financiamento</legend>
+              <div class="grid2">
+                <label>
+                  Montante do crédito (€)
+                  <input name="loanAmount" type="number" min="0" step="1000" value="200000" required />
+                </label>
+                <label>
+                  Prazo (anos)
+                  <input name="years" type="number" min="1" max="40" step="1" value="30" required />
+                </label>
+                <label>
+                  Tipo de taxa
+                  <select name="rateType">
+                    <option value="variable" selected>Variável (Euribor + spread)</option>
+                    <option value="mixed">Mista</option>
+                    <option value="fixed">Fixa</option>
+                  </select>
+                </label>
+                <label id="mixed-years-wrap" class="is-hidden">
+                  Período inicial fixo (anos)
+                  <input name="mixedFixedYears" type="number" min="1" max="30" step="1" value="5" />
+                </label>
+                <label>
+                  Euribor (% a.a.)
+                  <input name="euribor" type="number" min="-2" max="20" step="0.01" value="2.10" />
+                </label>
+                <label>
+                  Spread (% a.a.)
+                  <input name="spread" type="number" min="0" max="20" step="0.01" value="0.90" />
+                </label>
+                <label>
+                  TAN (% a.a.)
+                  <input name="tan" type="number" min="0" max="30" step="0.01" value="3.00" />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Mutuários e rendimento</legend>
+              <div class="grid2">
+                <label>
+                  Idade 1.º mutuário
+                  <input name="age1" type="number" min="18" max="80" step="1" value="37" required />
+                </label>
+                <label>
+                  Idade 2.º mutuário (opcional)
+                  <input name="age2" type="number" min="0" max="80" step="1" value="" placeholder="—" />
+                </label>
+                <label>
+                  Rendimento líquido mensal (€)
+                  <input name="netMonthlyIncome" type="number" min="0" step="50" value="3200" required />
+                </label>
+                <label>
+                  Outros créditos mensais (€)
+                  <input name="otherMonthlyDebts" type="number" min="0" step="10" value="150" />
+                </label>
+              </div>
+              <div class="checks" id="young-options">
+                <label class="check" id="young-first-wrap">
+                  <input name="youngFirstHome" type="checkbox" />
+                  1.ª habitação jovem (≤ 35 anos)
+                </label>
+                <label class="check" id="young-guarantee-wrap">
+                  <input name="youngPublicGuarantee" type="checkbox" />
+                  Garantia pública (LTV até 100%)
+                </label>
+              </div>
+              <p class="field-hint" id="young-age-hint" hidden>
+                Crédito jovem indisponível: todos os mutuários têm de ter 35 anos ou menos. Com 36 anos não há isenção de IMT/IS nem garantia pública (LTV 100%).
+              </p>
+            </fieldset>
+
+            <fieldset>
+              <legend>Custos associados</legend>
+              <div class="grid2">
+                <label>
+                  Comissão de dossier (€)
+                  <input name="dossierFee" type="number" min="0" step="10" value="650" />
+                </label>
+                <label>
+                  Avaliação do imóvel (€)
+                  <input name="appraisalFee" type="number" min="0" step="10" value="280" />
+                </label>
+                <label>
+                  Seguro vida (€ / ano)
+                  <input name="lifeInsuranceAnnual" type="number" min="0" step="10" value="900" />
+                </label>
+                <label>
+                  Seguro multirriscos (€ / ano)
+                  <input name="homeInsuranceAnnual" type="number" min="0" step="10" value="220" />
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="btn" type="submit">Simular crédito habitação</button>
+          </form>
+
+          <div class="results" id="results-housing">
+            <div class="empty">Preencha os dados e simule para ver prestação, impostos e conformidade BdP.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-personal" class="panel">
+        <div class="layout">
+          <form id="form-personal" class="card form">
+            <h1>Crédito pessoal</h1>
+            <p class="lede">
+              Crédito aos consumidores (DL 133/2009): Imposto do Selo, TAEG vs. usura, DSTI 45% (Rec. 1/2026) e prazo até 10 anos.
+            </p>
+
+            <fieldset>
+              <legend>Contrato</legend>
+              <div class="grid2">
+                <label>
+                  Tipo de produto
+                  <select name="product">
+                    <option value="personal" selected>Pessoal / consolidação</option>
+                    <option value="autoCollateral">Automóvel com garantia</option>
+                    <option value="autoLeasing">Locação financeira auto</option>
+                    <option value="other">Outros créditos a consumidores</option>
+                    <option value="revolving">Cartão / revolving</option>
+                  </select>
+                </label>
+                <label>
+                  Montante (€)
+                  <input name="loanAmount" type="number" min="0" step="100" value="15000" required />
+                </label>
+                <label>
+                  Prazo (anos)
+                  <input name="years" type="number" min="0.25" max="10" step="0.25" value="5" required />
+                </label>
+                <label>
+                  TAN (% a.a.)
+                  <input name="tan" type="number" min="0" max="40" step="0.01" value="8.90" required />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Perfil</legend>
+              <div class="grid2">
+                <label>
+                  Idade
+                  <input name="age1" type="number" min="18" max="80" value="32" />
+                </label>
+                <label>
+                  Rendimento líquido mensal (€)
+                  <input name="netMonthlyIncome" type="number" min="0" step="50" value="1600" required />
+                </label>
+                <label>
+                  Outros créditos mensais (€)
+                  <input name="otherMonthlyDebts" type="number" min="0" step="10" value="80" />
+                </label>
+                <label>
+                  Comissão de dossier (€)
+                  <input name="dossierFee" type="number" min="0" step="10" value="250" />
+                </label>
+                <label>
+                  Seguro proteção (€ / ano)
+                  <input name="lifeInsuranceAnnual" type="number" min="0" step="10" value="0" />
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="btn" type="submit">Simular crédito pessoal</button>
+          </form>
+          <div class="results" id="results-personal">
+            <div class="empty">Preencha os dados e simule para ver prestação, TAEG e conformidade.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-rules" class="panel">
+        <article class="card prose">
+          <h1>Normas aplicadas</h1>
+          <p>
+            Esta ferramenta é informativa. Não constitui proposta de crédito nem substitui a FIN (Ficha de Informação
+            Normalizada) ou a FINE. As instituições analisam cada operação caso a caso.
+          </p>
+          <h2>Banco de Portugal — Rec. Macroprudencial n.º 1/2026</h2>
+          <p>
+            Substitui a recomendação de 2018. Aplica-se aos contratos cuja avaliação de solvabilidade ocorra a partir de 1 de agosto de 2026.
+          </p>
+          <ul>
+            <li><strong>LTV</strong>: 90% para aquisição, construção ou obras em habitação própria e permanente; 80% para outras finalidades. O rácio usa o menor entre o valor de aquisição e a avaliação. Imóveis da banca deixam de beneficiar, em regra, de LTV 100%.</li>
+            <li><strong>DSTI</strong>: encargos mensais de crédito ≤ 45% do rendimento líquido (antes 50%). Exceções: até 10% do montante concedido por cada banco em cada semestre (antes 15%).</li>
+            <li><strong>Teste de esforço</strong> (inalterado desde out. 2023): o DSTI de 45% é calculado após agravar a TAN se for variável (ou na fase variável da taxa mista): +0,5 p.p. se prazo ≤ 5 anos; +1 p.p. se 5–10 anos; +1,5 p.p. se &gt; 10 anos. Taxa fixa pura: sem agravamento.</li>
+            <li><strong>Prazo habitação</strong>: até 40 anos se o mutuário mais velho tem 35 anos ou menos; até 35 anos se tem mais de 35 anos. Deixou de existir o critério de maturidade média da carteira e o teto de 75 anos no termo.</li>
+            <li><strong>Prazo consumo</strong>: máximo 10 anos (recomendação para novos créditos a consumidores), quando aplicável.</li>
+          </ul>
+          <h2>Fiscalidade</h2>
+          <ul>
+            <li><strong>IMT</strong>: tabelas progressivas do CIMT para HPP e outros urbanos no Continente (atualização OE 2025). Açores e Madeira com reduções regionais indicativas.</li>
+            <li><strong>Jovens ≤ 35 anos</strong>: isenção de IMT na 1.ª HPP até ao 4.º escalão (e isenção de Imposto do Selo na aquisição, nos termos legais).</li>
+            <li><strong>Imposto do Selo</strong>: 0,8% na aquisição de imóvel; 0,6% no crédito hipotecário. No crédito ao consumo: 0,04%/mês se &lt; 1 ano; 0,5% se 1–5 anos; 0,6% se ≥ 5 anos.</li>
+          </ul>
+          <h2>TAEG e usura</h2>
+          <p>
+            No crédito aos consumidores, a TAEG não pode exceder a taxa média do mercado acrescida de um terço
+            (DL 133/2009). Os tetos são publicados trimestralmente pelo Banco de Portugal. Os valores neste simulador
+            são indicativos do último conjunto conhecido e devem ser confirmados.
+          </p>
+          <h2>Crédito à habitação</h2>
+          <p>
+            DL 74-A/2017 (contratos de crédito à habitação e imóveis) e DL 74/2017 (amortização antecipada: 0,5% em taxa
+            variável e 2% em taxa fixa, sobre o capital reembolsado). Seguros de vida e multirriscos entram na TAEG quando
+            são condição do contrato.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Simulação educativa. Confirme IMT, Imposto do Selo e taxas máximas de TAEG nas fontes oficiais (AT e Banco de Portugal).
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
