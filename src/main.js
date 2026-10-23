@@ -176,6 +176,7 @@ const yearsInput = housingForm.elements.years
 
 function runHousing() {
   const data = formData(housingForm)
+  data.region = 'continente'
   if (!data.tan) data.tan = (Number(data.euribor) + Number(data.spread)) / 100
   else data.tan = data.tan / 100
   data.youngFirstHome = Boolean(youngFirst.checked) && !youngFirst.disabled
