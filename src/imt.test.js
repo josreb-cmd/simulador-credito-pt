@@ -160,3 +160,27 @@ test('Jovem 30 anos, 1.ª HPP, 660.983 € (1 € acima) não tem isenção e pa
   assert.equal(result.tax, 39658.98)
   assert.equal(result.exempt, false)
 })
+
+test('HPP 145.000 € (entre os limites de 2025 e 2026) paga 773,08 € (2% − 2.126,92)', () => {
+  assert.equal(imt({ propertyValue: 145000 }).tax, 773.08)
+})
+
+test('HPP 198.000 € (entre os limites de 2025 e 2026) paga 3.408,98 € (5% − 6.491,02)', () => {
+  assert.equal(imt({ propertyValue: 198000 }).tax, 3408.98)
+})
+
+test('HPP 330.000 € (entre os limites de 2025 e 2026) paga 12.642,04 € (7% − 10.457,96)', () => {
+  assert.equal(imt({ propertyValue: 330000 }).tax, 12642.04)
+})
+
+test('Secundária 145.000 € (entre os limites de 2025 e 2026) paga 1.836,54 € (2% − 1.063,46)', () => {
+  assert.equal(imt({ propertyValue: 145000, purpose: 'second' }).tax, 1836.54)
+})
+
+test('Secundária 198.000 € (entre os limites de 2025 e 2026) paga 4.472,44 € (5% − 5.427,56)', () => {
+  assert.equal(imt({ propertyValue: 198000, purpose: 'second' }).tax, 4472.44)
+})
+
+test('Secundária 330.000 € (entre os limites de 2025 e 2026) paga 13.705,50 € (7% − 9.394,50)', () => {
+  assert.equal(imt({ propertyValue: 330000, purpose: 'second' }).tax, 13705.5)
+})
