@@ -2,7 +2,7 @@
 
 Simulador de **crédito à habitação** e **crédito pessoal** alinhado com o regime fiscal português e a Recomendação Macroprudencial n.º 1/2026 do Banco de Portugal.
 
-Versão publicada: https://nhrzgoa8.monkeycode-ai.gallery/
+Versão publicada: https://credito-pt.solucoeseficazes.pt/
 
 ## O que calcula
 
@@ -38,7 +38,7 @@ Abre o endereço indicado no terminal (por omissão `http://localhost:8000`).
 
 ```bash
 # Testes do motor de cálculo
-node src/calc.test.js
+npm test
 
 # Build de produção
 npm run build
