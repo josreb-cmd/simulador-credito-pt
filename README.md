@@ -57,8 +57,10 @@ vite.config.js
 src/
   calc.js
   calc.test.js
+  imt.test.js
   main.js
   rules.js
+  selo.test.js
   styles.css
 ```
 
