@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 8000",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0 --port 8000"
+    "preview": "vite preview --host 0.0.0.0 --port 8000",
+    "test": "node --test src/imt.test.js"
   },
   "devDependencies": {
     "vite": "^6.3.5"

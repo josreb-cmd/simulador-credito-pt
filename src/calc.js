@@ -4,6 +4,7 @@ import {
   IMT_RURAL_RATE,
   IMT_OTHER_RATE,
   YOUNG_IMT_EXEMPTION_LIMIT,
+  YOUNG_IMT_PARTIAL_LIMIT,
   YOUNG_MAX_AGE,
   STAMP_DUTY,
   BDP,
@@ -52,14 +53,15 @@ export function calcIMT({
   const table = isHpp ? IMT_HPP_CONTINENTE : IMT_OTHER_URBAN_CONTINENTE
   let tax = applyTable(value, table)
   let note = isHpp
-    ? 'Tabela IMT habitação própria e permanente (Continente, OE 2025).'
-    : 'Tabela IMT outros prédios urbanos (Continente, OE 2025).'
+    ? 'Tabela IMT habitação própria e permanente (Continente, OC AT 40129/2026).'
+    : 'Tabela IMT outros prédios urbanos (Continente, OC AT 40129/2026).'
 
   const youngOk =
     isHpp &&
     youngFirstHome &&
     Number(buyerAge) > 0 &&
-    Number(buyerAge) <= YOUNG_MAX_AGE
+    Number(buyerAge) <= YOUNG_MAX_AGE &&
+    value <= YOUNG_IMT_PARTIAL_LIMIT
 
   let exempt = false
   if (youngOk) {

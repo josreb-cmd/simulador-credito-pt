@@ -1,6 +1,6 @@
 /**
  * Regras fiscais portuguesas e recomendação macroprudencial do Banco de Portugal.
- * Referências: CIMT, CIS/TGIS, DL 74-A/2017, DL 133/2009,
+ * Referências: CIMT (tabelas 2026: OC AT 40129/2026), CIS/TGIS, DL 74-A/2017, DL 133/2009,
  * Rec. Macroprudencial n.º 1/2026 (avaliações de solvabilidade a partir de 1 ago 2026).
  * Teste de esforço de taxa: em vigor desde outubro de 2023 (inalterado na Rec. 1/2026).
  */
@@ -8,28 +8,30 @@
 export const YEAR_REF = 2026
 
 export const IMT_HPP_CONTINENTE = [
-  { upTo: 104261, rate: 0.0, abatement: 0 },
-  { upTo: 142682, rate: 0.02, abatement: 2085.22 },
-  { upTo: 194583, rate: 0.05, abatement: 6365.68 },
-  { upTo: 324258, rate: 0.07, abatement: 10257.34 },
-  { upTo: 648514, rate: 0.08, abatement: 13499.92 },
-  { upTo: 1128287, rate: 0.06, abatement: 0, flat: true },
+  { upTo: 106346, rate: 0.0, abatement: 0 },
+  { upTo: 145470, rate: 0.02, abatement: 2126.92 },
+  { upTo: 198347, rate: 0.05, abatement: 6491.02 },
+  { upTo: 330539, rate: 0.07, abatement: 10457.96 },
+  { upTo: 660982, rate: 0.08, abatement: 13763.35 },
+  { upTo: 1150853, rate: 0.06, abatement: 0, flat: true },
   { upTo: Infinity, rate: 0.075, abatement: 0, flat: true }
 ]
 
 export const IMT_OTHER_URBAN_CONTINENTE = [
-  { upTo: 104261, rate: 0.01, abatement: 0 },
-  { upTo: 142682, rate: 0.02, abatement: 1042.61 },
-  { upTo: 194583, rate: 0.05, abatement: 5323.07 },
-  { upTo: 324258, rate: 0.07, abatement: 9214.73 },
-  { upTo: 621501, rate: 0.08, abatement: 12457.31 },
-  { upTo: Infinity, rate: 0.06, abatement: 0, flat: true }
+  { upTo: 106346, rate: 0.01, abatement: 0 },
+  { upTo: 145470, rate: 0.02, abatement: 1063.46 },
+  { upTo: 198347, rate: 0.05, abatement: 5427.56 },
+  { upTo: 330539, rate: 0.07, abatement: 9394.5 },
+  { upTo: 633931, rate: 0.08, abatement: 12699.89 },
+  { upTo: 1150853, rate: 0.06, abatement: 0, flat: true },
+  { upTo: Infinity, rate: 0.075, abatement: 0, flat: true }
 ]
 
 export const IMT_RURAL_RATE = 0.05
 export const IMT_OTHER_RATE = 0.065
 
-export const YOUNG_IMT_EXEMPTION_LIMIT = 324258
+export const YOUNG_IMT_EXEMPTION_LIMIT = 330539
+export const YOUNG_IMT_PARTIAL_LIMIT = 660982
 export const YOUNG_MAX_AGE = 35
 
 export const STAMP_DUTY = {
