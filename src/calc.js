@@ -103,8 +103,7 @@ export function stampDutyConsumerCredit(loan, years) {
     const months = Math.max(1, Math.ceil(years * 12))
     return round2(capital * STAMP_DUTY.consumerLt1yMonthly * months)
   }
-  if (years < 5) return round2(capital * STAMP_DUTY.consumer1to5y)
-  return round2(capital * STAMP_DUTY.consumerGte5y)
+  return round2(capital * STAMP_DUTY.consumerGte1y)
 }
 
 export function monthlyRate(tanAnnual) {

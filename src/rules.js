@@ -37,9 +37,10 @@ export const YOUNG_MAX_AGE = 35
 export const STAMP_DUTY = {
   propertyAcquisition: 0.008,
   mortgageCredit: 0.006,
-  consumerLt1yMonthly: 0.0004,
-  consumer1to5y: 0.005,
-  consumerGte5y: 0.006
+  // Crédito ao consumo (verba 17.2 TGIS): prazo inferior a 1 ano, 0,141% do capital por cada mês
+  // ou fracção; prazo igual ou superior a 1 ano, 1,76% do capital.
+  consumerLt1yMonthly: 0.00141,
+  consumerGte1y: 0.0176
 }
 
 export const BDP = {

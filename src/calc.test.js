@@ -129,7 +129,7 @@ const p = simulatePersonal({
   age1: 32
 })
 assert(p.schedule.payment > 300, 'prestação pessoal')
-assert(p.isCredit === 90, `IS consumo 0,6% 5 anos: ${p.isCredit}`)
+assert(p.isCredit === 264, `IS consumo 1,76% 5 anos (verba 17.2): ${p.isCredit}`)
 assert(p.shock === 0, 'crédito pessoal TAN fixa: sem choque')
 
 console.log('ok', {
